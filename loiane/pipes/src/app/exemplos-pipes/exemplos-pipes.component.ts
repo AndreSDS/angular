@@ -1,4 +1,7 @@
+import { map } from 'rxjs/operators';
+import { interval } from 'rxjs/internal/observable/interval';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-exemplos-pipes',
@@ -6,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./exemplos-pipes.component.css']
 })
 export class ExemplosPipesComponent implements OnInit {
+
+  constructor() { }
 
   livro: any = {
     titulo: 'Learning Javascript',
@@ -16,7 +21,32 @@ export class ExemplosPipesComponent implements OnInit {
     url: 'http://a.co/glgjpRP'
   };
 
-  constructor() { }
+  livros: string[] = ['Java', 'Angular 2'];
+
+  filtro: string;
+
+  valorAsync = new Promise((resolve, reject) => {
+    setTimeout(() => resolve('Valor Assíncrono!'), 2000);
+  });
+
+  valorAsync2 = Observable.interval(2000).map('Valor assíncrono!');
+
+  addCurso(valor) {
+    this.livros.push(valor);
+  }
+
+  obterCursos() {
+    if (this.livros.length === 0 || this.filtro === undefined || this.filtro.trim() === '') {
+      return this.livros;
+    }
+
+    return this.livros.filter((v) => {
+      if (v.toLocaleLowerCase().indexOf(this.filtro.toLowerCase()) >= 0) {
+        return true;
+      }
+      return false;
+    });
+  }
 
   ngOnInit() {
   }
