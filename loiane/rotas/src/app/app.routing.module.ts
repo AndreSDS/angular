@@ -1,12 +1,14 @@
+import { NgModule } from '@angular/core';
+import { ModuleWithProviders } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { HomeComponent } from './home/home.component';
 import { CursoNEncontradoComponent } from './curso-n-encontrado/curso-n-encontrado.component';
 import { DetaheComponent } from './detalhe/detalhe.component';
-import { HomeComponent } from './home/home.component';
-import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CursosComponent } from './cursos/cursos.component';
-import { ModuleWithProviders } from '@angular/core';
 
-const APP_ROUTES: Routes = [
+const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'cursos', component: CursosComponent },
@@ -14,4 +16,8 @@ const APP_ROUTES: Routes = [
   { path: 'naoEncontrado', component: CursoNEncontradoComponent }
 ];
 
-export const routing: ModuleWithProviders = RouterModule.forRoot(APP_ROUTES);
+@NgModule({
+    imports: [RouterModule.forRoot(appRoutes)],
+    exports: [RouterModule]
+})
+export class AppRoutingModule {}
