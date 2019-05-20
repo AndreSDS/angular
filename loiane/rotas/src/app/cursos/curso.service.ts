@@ -17,11 +17,11 @@ export class CursoService {
 // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < cursos.length; i++) {
       const curso = cursos[i];
-      if (curso.id === id) {
+// tslint:disable-next-line: triple-equals
+      if (curso.id == id) {
         return curso;
       }
     }
-    return null;
   }
 
   constructor() { }
