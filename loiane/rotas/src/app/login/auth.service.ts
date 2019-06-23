@@ -25,7 +25,11 @@ export class AuthService {
        } else {
          this.usuarioAutenticado = false;
 
-         this.mostrarMenuEmitter.emit(true);
+         this.mostrarMenuEmitter.emit(false);
        }
+      }
+
+  usuarioEstaAutenticado(){
+    return this.usuarioAutenticado;
   }
 }
