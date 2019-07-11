@@ -25,7 +25,7 @@ export class AlunoFormComponent implements OnInit, OnDestroy, IFormCanDeactivate
       (params: any) => {
         const id = params.id;
 
-        this.aluno = this.alunosService.getAlunos();
+        this.aluno = this.alunosService.getAluno(id);
 
         if (this.aluno === null) {
           this.aluno = {};
