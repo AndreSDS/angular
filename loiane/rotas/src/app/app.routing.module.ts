@@ -11,12 +11,14 @@ const appRoutes: Routes = [
   { path: 'cursos',
     loadChildren: './cursos/cursos.module#CursosModule',
     canActivate: [AuthGuard],
-    canActivateChild: [CursosGuard]
+    canActivateChild: [CursosGuard],
+    canLoad: [AuthGuard]
   },
   { path: 'alunos',
     loadChildren: './alunos/alunos.module#AlunosModule',
     canActivate: [AuthGuard],
-    canActivateChild: [AlunosGuard]
+    // canActivateChild: [AlunosGuard],
+    canLoad: [AuthGuard]
   },
   { path: '', component: HomeComponent,
     canActivate: [AuthGuard]},
