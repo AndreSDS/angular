@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+
+    <a href="#" class="navbar-brand" routerLink="">
+      Angular Forms
+    </a>
+
+    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+      <li routerLinkActive="active">
+        <a routerLink="/templateForm">
+          Form - Template Driven
+        </a>
+      </li>
+
+      <li routerLinkActive="active">
+        <a routerLink="/dataForm">
+          Form - Data Driven
+        </a>
+      </li>
+    </ul>
+</nav>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
