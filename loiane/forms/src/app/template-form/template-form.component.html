@@ -1,19 +1,24 @@
 <form #f="ngForm" (ngSubmit)="onSubmit(f)">
 
-  <div class="form-group">
+  <div class="form-group" [class.is-invalid]="!nome.valid && nome.touched">
     <label for="nome">Nome</label>
     <input required
+    #nome="ngModel"
     type="text"
     name="nome"
     id="nome"
     class="form-control"
     placeholder="Nome"
     [(ngModel)]="usuario.nome"/>
+    <div *ngIf="!nome.valid && nome.touched"
+      class="alert alert-danger" role="danger">
+      Campo nome é obrigatório!
+    </div>
   </div>
 
   <div class="form-group">
     <label for="email">Email</label>
-    <input required
+    <input required email
     type="email"
     id="email"
     name="email"
@@ -22,5 +27,8 @@
     [(ngModel)]="usuario.email" />
   </div>
 
-  <button type="submit" class="btn btn-primary">Enviar</button>
+  <button type="submit" class="btn btn-primary"
+  [disabled]="!f.valid">Enviar</button>
+
+  <app-form-debug [form]="f"></app-form-debug>
 </form>
