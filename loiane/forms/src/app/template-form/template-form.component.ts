@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-template-form',
@@ -9,16 +11,14 @@ export class TemplateFormComponent implements OnInit {
 
   usuario: any = {
     nome: null,
-    email: null,
-    rua: null,
-    cep: null
+    email: null
   };
 
   onSubmit(form) {
     console.log(form);
   }
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -32,6 +32,19 @@ export class TemplateFormComponent implements OnInit {
       'has-error': this.verificaValidTouched(campo),
       'has-feedback': this.verificaValidTouched(campo)
     };
+  }
+
+  consultaCEP(cep) {
+    cep = cep.replace(/\D/g, '');
+
+    if (cep !== '') {
+      const validacep = /^[0-9]{8}$/;
+
+      if (validacep.test(cep)) {
+        this.http.get(`//viacep.com.br/ws/${cep}/json`)
+        .subscribe(dados => console.log(dados));
+      }
+    }
   }
 
 }

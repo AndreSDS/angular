@@ -36,12 +36,15 @@
     </div>
   </div>
 
+  <div ngModelGroup="endereco">
+
   <div class="form-group" [ngClass]="aplicaCssErro(cep)">
 
     <div class="col-md-3">
       <label for="cep" class="control-label">CEP</label>
       <input type="text" class="form-control" id="cep"
-      name="cep" ngModel required #cep="ngModel">
+      name="cep" ngModel required #cep="ngModel"
+      (blur)="consultaCEP($event.target.value)">
       <app-campo-control [mostrarErro]="verificaValidTouched(cep)" msgErro="Cep é obrigatório">
       </app-campo-control>
     </div>
@@ -106,6 +109,7 @@
                 <app-campo-control [mostrarErro]="verificaValidTouched(estado)" msgErro="Estado é obrigatório">
                 </app-campo-control>
               </div>
+        </div>
 
     </div>
 
