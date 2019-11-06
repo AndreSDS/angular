@@ -1,5 +1,6 @@
 import { PaginaNEncontradaComponent } from './pagina-n-encontrada/pagina-n-encontrada.component';
 import { NgModule } from '@angular/core';
+import {ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';

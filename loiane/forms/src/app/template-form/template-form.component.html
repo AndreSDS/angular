@@ -43,8 +43,8 @@
     <div class="col-md-3">
       <label for="cep" class="control-label">CEP</label>
       <input type="text" class="form-control" id="cep"
-      name="cep" ngModel required #cep="ngModel"
-      (blur)="consultaCEP($event.target.value)">
+      name="cep" ngModel required autocomplete #cep="ngModel"
+      (blur)="consultaCEP($event.target.value, f)">
       <app-campo-control [mostrarErro]="verificaValidTouched(cep)" msgErro="Cep é obrigatório">
       </app-campo-control>
     </div>
@@ -76,7 +76,7 @@
           name="rua"
           id="rua"
           class="form-control"
-          [(ngModel)]="usuario.rua"/>
+          ngModel/>
         <div *ngIf="!rua.valid && rua.touched"
           class="alert alert-danger" role="danger">
           Campo rua é obrigatório!

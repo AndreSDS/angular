@@ -9,6 +9,7 @@ import { TemplateFormComponent } from './template-form/template-form.component';
 import { DataFormComponent } from './data-form/data-form.component';
 import { FormDebugComponent } from './form-debug/form-debug.component';
 import { CampoControlComponent } from './campo-control-erro/campo-control.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CampoControlComponent } from './campo-control-erro/campo-control.compon
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    TooltipModule
+    TooltipModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

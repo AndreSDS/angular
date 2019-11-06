@@ -31,17 +31,17 @@ export class CursosComponent implements OnInit {
 
   }
 
-// tslint:disable-next-line: use-life-cycle-interface
-  ngOnDestroy() {
-    this.inscricao.unsubscribe();
-  }
-
   proximaPagina() {
     // this.pagina++;
     this.router.navigate(
       ['/cursos'],
       {queryParams: {pagina: ++this.pagina}}
       );
+  }
+
+// tslint:disable-next-line: use-life-cycle-interface
+  ngOnDestroy() {
+    this.inscricao.unsubscribe();
   }
 
 }
