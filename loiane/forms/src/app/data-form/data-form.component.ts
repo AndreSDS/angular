@@ -25,7 +25,16 @@ export class DataFormComponent implements OnInit {
 
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
-      email: [null, [Validators.required, Validators.email]]
+      email: [null, [Validators.required, Validators.email]],
+      endereco: this.formBuilder.group({
+        cep: [null, Validators.required],
+        numero: [null, Validators.required],
+        complemento: [null],
+        rua: [null, Validators.required],
+        bairro: [null, Validators.required],
+        cidade: [null, Validators.required],
+        estado: [null, Validators.required]
+      })
     });
   }
 
@@ -38,22 +47,22 @@ export class DataFormComponent implements OnInit {
         console.log(dados);
         this.formulario.reset();
       },
-      (error: any) => alert("erro"));
+      (error: any) => alert('error'));
   }
 
-  resetar(){
+  resetar() {
     this.formulario.reset();
   }
 
-  verificaValidaTouched(campo){
-    return  this.formulario.get(campo).valid && this.formulario.get(campo).touched
+  verificaValidaTouched(campo: string) {
+    return this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
-  aplicaCssErro(campo){
+  aplicaCssErro(campo: string) {
     return {
       'has-error': this.verificaValidaTouched(campo),
       'has-feedback': this.verificaValidaTouched(campo)
-    }
+    };
   }
 
 }
