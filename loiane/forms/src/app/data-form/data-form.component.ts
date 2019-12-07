@@ -30,8 +30,30 @@ export class DataFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.http.post('https://httpbin.org/post', JSON.stringify(this.formulario.value))
-    .pipe(map(res => res)).subscribe(dados => console.log(dados));
+    this.http.post(
+      'https://httpbin.org/post',
+       JSON.stringify(this.formulario.value)
+      ).pipe(map(res => res))
+      .subscribe(dados => {
+        console.log(dados);
+        this.formulario.reset();
+      },
+      (error: any) => alert("erro"));
+  }
+
+  resetar(){
+    this.formulario.reset();
+  }
+
+  verificaValidaTouched(campo){
+    return  this.formulario.get(campo).valid && this.formulario.get(campo).touched
+  }
+
+  aplicaCssErro(campo){
+    return {
+      'has-error': this.verificaValidaTouched(campo),
+      'has-feedback': this.verificaValidaTouched(campo)
+    }
   }
 
 }
