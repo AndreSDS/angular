@@ -55,7 +55,7 @@ export class DataFormComponent implements OnInit {
   }
 
   verificaValidaTouched(campo: string) {
-    return this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
   }
 
   aplicaCssErro(campo: string) {
@@ -63,6 +63,47 @@ export class DataFormComponent implements OnInit {
       'has-error': this.verificaValidaTouched(campo),
       'has-feedback': this.verificaValidaTouched(campo)
     };
+  }
+
+  consultaCEP() {
+    let cep = this.formulario.get('endereco.cep').value;
+    cep = cep.replace(/\D/g, '');
+
+    if (cep !== '') {
+      const validacep = /^[0-9]{8}$/;
+
+      if (validacep.test(cep)) {
+
+        this.resetDadosForm();
+
+        this.http.get(`//viacep.com.br/ws/${cep}/json`)
+        .subscribe(dados => this.populaDados(dados));
+      }
+    }
+  }
+
+  populaDados(dados) {
+    this.formulario.patchValue({
+      endereco: {
+        rua: dados.logradouro,
+        complemento: dados.complemento,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf
+      }
+    });
+  }
+
+  resetDadosForm() {
+    this.formulario.patchValue({
+    endereco: {
+      rua: null,
+      complemento: null,
+      bairro: null,
+      cidade: null,
+      estado: null
+    }
+    });
   }
 
 }
