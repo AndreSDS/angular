@@ -1,7 +1,11 @@
+import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
+import { DropdownService } from '../shared/services/dropdown.service';
+import { Estados } from '../shared/models/estados.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-data-form',
@@ -9,15 +13,21 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./data-form.component.css']
 })
 export class DataFormComponent implements OnInit {
-
   formulario: FormGroup;
+  // estados: Estados[];
+  estados: Observable<Estados[]>;
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient
-    ) { }
+    private http: HttpClient,
+    private dropdownService: DropdownService,
+    private cepService: ConsultaCepService) {}
 
   ngOnInit() {
+
+    this.estados = this.dropdownService.getEstados();
+    // this.dropdownService.getEstados().subscribe( dados => this.estados = dados );
+
     /*this.formulario = new FormGroup({
       nome: new FormControl(),
       email: new FormControl()
@@ -39,15 +49,32 @@ export class DataFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.http.post(
-      'https://httpbin.org/post',
-       JSON.stringify(this.formulario.value)
-      ).pipe(map(res => res))
-      .subscribe(dados => {
-        console.log(dados);
-        this.formulario.reset();
-      },
-      (error: any) => alert('error'));
+    if (this.formulario.valid) {
+      this.http
+        .post('https://httpbin.org/post', JSON.stringify(this.formulario.value))
+        .pipe(map(res => res))
+        .subscribe(
+          dados => {
+            console.log(dados);
+            this.formulario.reset();
+          },
+          (error: any) => alert('error')
+        );
+    } else {
+      this.verificaValidaForm(this.formulario);
+    }
+  }
+
+  verificaValidaForm(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(campo => {
+      const controle = formGroup.get(campo);
+      controle.markAsDirty();
+
+      if (controle instanceof FormGroup) {
+        this.verificaValidaForm(controle);
+      } else {
+      }
+    });
   }
 
   resetar() {
@@ -55,7 +82,9 @@ export class DataFormComponent implements OnInit {
   }
 
   verificaValidaTouched(campo: string) {
-    return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+    return (
+      !this.formulario.get(campo).valid && this.formulario.get(campo).touched
+    );
   }
 
   aplicaCssErro(campo: string) {
@@ -66,19 +95,11 @@ export class DataFormComponent implements OnInit {
   }
 
   consultaCEP() {
-    let cep = this.formulario.get('endereco.cep').value;
-    cep = cep.replace(/\D/g, '');
+    const cep = this.formulario.get('endereco.cep').value;
 
-    if (cep !== '') {
-      const validacep = /^[0-9]{8}$/;
-
-      if (validacep.test(cep)) {
-
-        this.resetDadosForm();
-
-        this.http.get(`//viacep.com.br/ws/${cep}/json`)
-        .subscribe(dados => this.populaDados(dados));
-      }
+    if (cep != null && cep !== '') {
+      this.cepService.consultaCEP(cep)
+      .subscribe(dados => this.populaDados(dados));
     }
   }
 
@@ -96,14 +117,13 @@ export class DataFormComponent implements OnInit {
 
   resetDadosForm() {
     this.formulario.patchValue({
-    endereco: {
-      rua: null,
-      complemento: null,
-      bairro: null,
-      cidade: null,
-      estado: null
-    }
+      endereco: {
+        rua: null,
+        complemento: null,
+        bairro: null,
+        cidade: null,
+        estado: null
+      }
     });
   }
-
 }

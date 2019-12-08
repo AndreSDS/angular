@@ -107,8 +107,11 @@
 
               <div class="col-md-3">
                   <label for="estado" class="control-label">Estado</label>
-                  <input type="text" class="form-control" id="estado"
-                  formControlName="estado">
+                  <select class="form-control" id="estado" formControlName="estado">
+                    <option *ngFor="let uf of estados | async" [value]="uf.sigla">
+                      {{ uf.nome }}
+                    </option>
+                  </select>
                   <app-campo-control [mostrarErro]="verificaValidaTouched('endereco.estado')" msgErro="Estado é obrigatório">
                   </app-campo-control>
                 </div>
