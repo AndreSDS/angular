@@ -16,6 +16,7 @@ export class DataFormComponent implements OnInit {
   formulario: FormGroup;
   // estados: Estados[];
   estados: Observable<Estados[]>;
+  cargos: any[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,6 +25,8 @@ export class DataFormComponent implements OnInit {
     private cepService: ConsultaCepService) {}
 
   ngOnInit() {
+
+    this.cargos = this.dropdownService.getCargos();
 
     this.estados = this.dropdownService.getEstados();
     // this.dropdownService.getEstados().subscribe( dados => this.estados = dados );
@@ -34,6 +37,7 @@ export class DataFormComponent implements OnInit {
     });*/
 
     this.formulario = this.formBuilder.group({
+      cargo: [null],
       nome: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
       endereco: this.formBuilder.group({
@@ -125,5 +129,14 @@ export class DataFormComponent implements OnInit {
         estado: null
       }
     });
+  }
+
+  setCargo() {
+    const cargo = {nome: 'Dev', nivel: 'Pleno', desc: 'Dev Pl'};
+    this.formulario.get('cargo').setValue(cargo);
+  }
+
+  compararcargos(ob1, ob2) {
+    return ob1 && ob2 ? (ob1.nome === ob2.nome && ob1.nivel === ob2.nivel) : ob1 === ob2;
   }
 }
