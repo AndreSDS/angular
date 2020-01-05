@@ -161,7 +161,7 @@
   </div>
 
   <div class="form-group">
-    <div class="col-md-3" [ngClass]="aplicaCssErro('cargo')">
+    <div class="col-md-4" [ngClass]="aplicaCssErro('cargo')">
       <label for="cargo" class="control-label">Cargo</label>
       <select class="form-control" id="cargo" formControlName="cargo" [compareWith]="compararcargos">
         <option *ngFor="let cargo of cargos" [ngValue]="cargo">
@@ -169,13 +169,37 @@
         </option>
       </select>
     </div>
+
+    <div class="col-md-4" [ngClass]="aplicaCssErro('tecnologias')">
+      <label for="tecnologias" class="control-label">Tecnologias</label>
+      <select multiple class="form-control" id="tecnologias" formControlName="tecnologias" [compareWith]="compararcargos">
+        <option *ngFor="let tecnologia of tecnologias" [value]="tecnologia.nome">
+          {{ tecnologia.desc }}
+        </option>
+      </select>
+    </div>
+
+    <div class="col-md-3" [ngClass]="aplicaCssErro('newsletter')">
+      <label for="newsletter" class="control-label">Newsletter</label>
+      <div id="newsletter" class="row">
+        <div class="col-sm-4" *ngFor="let item of newsletterOp">
+          <label class="radio-inline">
+            <input type="radio" [value]="item.valor" formControlName="newsletter" />
+              {{ item.desc }}
+          </label>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <button type="submit" class="btn btn-primary">Enviar</button>
 
   <button class="btn btn-danger" (click)="resetar()">Cancelar</button>
 
-  <button class="btn" (click)="setCargo()">Cargo</button>
+  <button class="btn btn-info" (click)="setCargo()">Cargo</button>
+  <button class="btn btn-info" (click)="setTecnologias()">Tecnologias</button>
+
 
   <app-form-debug [form]="formulario"></app-form-debug>
 </form>

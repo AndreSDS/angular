@@ -17,6 +17,8 @@ export class DataFormComponent implements OnInit {
   // estados: Estados[];
   estados: Observable<Estados[]>;
   cargos: any[];
+  tecnologias: any[];
+  newsletterOp: any[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,8 +28,9 @@ export class DataFormComponent implements OnInit {
 
   ngOnInit() {
 
+    this.newsletterOp = this.dropdownService.getNewsletter();
     this.cargos = this.dropdownService.getCargos();
-
+    this.tecnologias = this.dropdownService.getTecnologias();
     this.estados = this.dropdownService.getEstados();
     // this.dropdownService.getEstados().subscribe( dados => this.estados = dados );
 
@@ -37,6 +40,8 @@ export class DataFormComponent implements OnInit {
     });*/
 
     this.formulario = this.formBuilder.group({
+      newsletter: ['s'],
+      tecnologias: [null],
       cargo: [null],
       nome: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
@@ -138,5 +143,9 @@ export class DataFormComponent implements OnInit {
 
   compararcargos(ob1, ob2) {
     return ob1 && ob2 ? (ob1.nome === ob2.nome && ob1.nivel === ob2.nivel) : ob1 === ob2;
+  }
+
+  setTecnologias() {
+    this.formulario.get('tecnologias').setValue(['java', 'javascript', 'php']);
   }
 }
