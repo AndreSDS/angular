@@ -1,11 +1,12 @@
 import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { DropdownService } from '../shared/services/dropdown.service';
 import { Estados } from '../shared/models/estados.model';
 import { Observable } from 'rxjs';
+import { FormValidation } from '../shared/form-validation';
 
 @Component({
   selector: 'app-data-form',
@@ -19,6 +20,8 @@ export class DataFormComponent implements OnInit {
   cargos: any[];
   tecnologias: any[];
   newsletterOp: any[];
+
+  frameworks = ['Angular', 'React', 'Vue', 'Sencha'];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,13 +43,15 @@ export class DataFormComponent implements OnInit {
     });*/
 
     this.formulario = this.formBuilder.group({
+      frameworks: this.buildFrameworks(),
+      termos: [null, Validators.pattern('true')],
       newsletter: ['s'],
       tecnologias: [null],
       cargo: [null],
       nome: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
       endereco: this.formBuilder.group({
-        cep: [null, Validators.required],
+        cep: [null, [Validators.required, FormValidation.cepValidator]],
         numero: [null, Validators.required],
         complemento: [null],
         rua: [null, Validators.required],
@@ -57,10 +62,24 @@ export class DataFormComponent implements OnInit {
     });
   }
 
+  buildFrameworks() {
+    const values = this.frameworks.map(v => new FormControl(false));
+    return this.formBuilder.array(values, FormValidation.requiredMinCheckbox(1));
+  }
+
   onSubmit() {
+
+    let valueSubmit = Object.assign({}, this.formulario.value);
+
+    valueSubmit = Object.assign(valueSubmit, {
+      frameworks: valueSubmit.frameworks
+        .map((v, i) => v ? this.frameworks[i] : null )
+        .filter(v => v !== null)
+    });
+
     if (this.formulario.valid) {
       this.http
-        .post('https://httpbin.org/post', JSON.stringify(this.formulario.value))
+        .post('https://httpbin.org/post', JSON.stringify(valueSubmit))
         .pipe(map(res => res))
         .subscribe(
           dados => {
@@ -92,7 +111,15 @@ export class DataFormComponent implements OnInit {
 
   verificaValidaTouched(campo: string) {
     return (
-      !this.formulario.get(campo).valid && this.formulario.get(campo).touched
+      this.formulario.get(campo).valid &&
+      (this.formulario.get(campo).touched || this.formulario.get(campo).dirty)
+    );
+  }
+
+  verificaRequired(campo: string) {
+    return (
+      this.formulario.get(campo).hasError('required') &&
+      (this.formulario.get(campo).touched || this.formulario.get(campo).dirty)
     );
   }
 
