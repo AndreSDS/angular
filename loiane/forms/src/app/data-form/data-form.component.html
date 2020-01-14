@@ -46,6 +46,31 @@
     </div>
   </div>
 
+  <div class="form-group" [ngClass]="aplicaCssErro('confirmaEmail')">
+    <div class="col-sm-12">
+      <label for="confirmaEmail">Confirmar Email</label>
+    </div>
+
+    <div class="col-sm-12">
+      <input
+        required
+        email
+        type="confirmaEmail"
+        id="confirmaEmail"
+        formControlName="confirmaEmail"
+        class="form-control"
+        placeholder="nome@email.com"
+      />
+
+      <app-campo-control
+        [mostrarErro]="formulario.get('confirmaEmail').hasError('equalsTo')"
+        msgErro="Emails não são iguais."
+      >
+      </app-campo-control>
+    </div>
+  </div>
+
+
   <div formGroupName="endereco">
     <div class="form-group" [ngClass]="aplicaCssErro('endereco.cep')">
       <div class="col-md-3">
@@ -67,7 +92,7 @@
 
         <app-campo-control
           [mostrarErro]="formulario.get('endereco.cep').hasError('cepInvalido')"
-          msgErro="Cep invalido."
+          msgErro="Cep inválido."
         >
         </app-campo-control>
       </div>
@@ -218,14 +243,15 @@
     <div class="col-md-3" [ngClass]="aplicaCssErro('frameworks')">
       <label for="frameworks">Frameworks</label>
       <div id="frameworks" class="row">
-        <div class="checkbox" class="col-sm-4" formArrayName="frameworks"
-        *ngFor="let item of formulario.get('frameworks').controls; let i = index">
+        <div class="checkbox" class="col-sm-4"
+        formArrayName="frameworks"
+        *ngFor="let item of formulario.get('frameworks')['controls']; let i = index">
           <label class="checkbox-inline">
-            <input type="checkbox" [formEnctype]="i"> {{ frameworks[i] }}
+            <input type="checkbox" [formControlName]="i"> {{ frameworks[i] }}
           </label>
         </div>
         <app-campo-control
-        [mostrarErro]="verificaValidaTouched('frameworks')"
+        [mostrarErro]="!formulario.get('frameworks').valid"
         msgErro="Selecione 1 opção."
       >
       </app-campo-control>
