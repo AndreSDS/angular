@@ -1,4 +1,5 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { config } from 'rxjs';
 
 export class FormValidation {
 
@@ -47,4 +48,14 @@ export class FormValidation {
     return validator;
   }
 
+  static getErrorMsg(fieldName: string, validatorName: string, validatorValue?: any) {
+  // tslint:disable-next-line: no-shadowed-variable
+  const config = {
+    required : `${ fieldName } é obrigatório.`,
+    minlength : `${ fieldName } precisa ter no mínimo ${validatorValue.requireLength} caracteres.`,
+    cepInvaido : 'CEP inválido.'
+  };
+
+  return config[validatorName];
+  }
 }

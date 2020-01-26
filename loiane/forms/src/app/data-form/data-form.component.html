@@ -14,11 +14,9 @@
         placeholder="Nome"
       />
 
-      <app-campo-control
-        [mostrarErro]="verificaValidaTouched('nome')"
-        msgErro="Nome é obrigatório."
+      <app-error-msg [control]="formulario.get('nome')" label="Nome"
       >
-      </app-campo-control>
+      </app-error-msg>
     </div>
   </div>
 
@@ -41,6 +39,24 @@
       <app-campo-control
         [mostrarErro]="verificaRequired('email')"
         msgErro="Email é obrigatório."
+      >
+      </app-campo-control>
+
+      <app-campo-control
+        [mostrarErro]="formulario.get('email').status === 'PENDING'"
+        msgErro="Validando email..."
+      >
+      </app-campo-control>
+
+      <app-campo-control
+        [mostrarErro]="formulario.get('email').status === 'VALID'"
+        msgErro="Email válido."
+      >
+      </app-campo-control>
+
+      <app-campo-control
+        [mostrarErro]="formulario.get('email').hasError('emailInvalido')"
+        msgErro="Email já cadastrado."
       >
       </app-campo-control>
     </div>
