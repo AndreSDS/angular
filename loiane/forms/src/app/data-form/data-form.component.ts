@@ -3,10 +3,10 @@ import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
-import { map } from 'rxjs/operators';
+import { map, tap, distinct, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { DropdownService } from '../shared/services/dropdown.service';
 import { Estados } from '../shared/models/estados.model';
-import { Observable } from 'rxjs';
+import { Observable, empty } from 'rxjs';
 import { FormValidation } from '../shared/form-validation';
 
 @Component({
@@ -64,6 +64,17 @@ export class DataFormComponent implements OnInit {
         estado: [null, Validators.required]
       })
     });
+
+    this.formulario.get('endereco.cep').statusChanges
+    .pipe(
+      distinctUntilChanged(),
+      tap(value => console.log('status CEP:', value)),
+      switchMap(status => status === 'VALID' ?
+        this.cepService.consultaCEP(this.formulario.get('endereco.cep').value)
+        : empty()
+      )
+    )
+    .subscribe(dados => dados ? this.populaDados(dados) : {});
   }
 
   buildFrameworks() {

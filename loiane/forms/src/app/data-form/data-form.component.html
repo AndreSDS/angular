@@ -36,29 +36,27 @@
         placeholder="nome@email.com"
       />
 
-      <app-campo-control
-        [mostrarErro]="verificaRequired('email')"
-        msgErro="Email é obrigatório."
+      <app-error-msg [control]="formulario.get('email')" label="Email"
       >
-      </app-campo-control>
+      </app-error-msg>
 
-      <app-campo-control
-        [mostrarErro]="formulario.get('email').status === 'PENDING'"
-        msgErro="Validando email..."
+      <app-error-msg
+        [control]="formulario.get('email').status === 'PENDING'"
+        label="Email"
       >
-      </app-campo-control>
+      </app-error-msg>
 
-      <app-campo-control
-        [mostrarErro]="formulario.get('email').status === 'VALID'"
-        msgErro="Email válido."
+      <app-error-msg
+        [control]="formulario.get('email').status === 'VALID'"
+        label="Email"
       >
-      </app-campo-control>
+      </app-error-msg>
 
-      <app-campo-control
-        [mostrarErro]="formulario.get('email').hasError('emailInvalido')"
-        msgErro="Email já cadastrado."
+      <app-error-msg
+        [control]="formulario.get('email').hasError('emailInvalido')"
+        label="Email"
       >
-      </app-campo-control>
+      </app-error-msg>
     </div>
   </div>
 
@@ -78,11 +76,11 @@
         placeholder="nome@email.com"
       />
 
-      <app-campo-control
-        [mostrarErro]="formulario.get('confirmaEmail').hasError('equalsTo')"
-        msgErro="Emails não são iguais."
+      <app-error-msg
+        [control]="formulario.get('confirmaEmail').hasError('equalsTo')"
+        label="Email"
       >
-      </app-campo-control>
+      </app-error-msg>
     </div>
   </div>
 
@@ -96,21 +94,20 @@
           class="form-control"
           id="cep"
           autocomplete
-          (blur)="consultaCEP()"
           formControlName="cep"
         />
 
-        <app-campo-control
-          [mostrarErro]="verificaRequired('endereco.cep')"
-          msgErro="Cep é obrigatório"
+        <app-error-msg
+          [control]="verificaRequired('endereco.cep')"
+          label="Cep"
         >
-        </app-campo-control>
+        </app-error-msg>
 
-        <app-campo-control
-          [mostrarErro]="formulario.get('endereco.cep').hasError('cepInvalido')"
-          msgErro="Cep inválido."
+        <app-error-msg
+          [control]="formulario.get('endereco.cep').hasError('cepInvalido')"
+          label="Cep"
         >
-        </app-campo-control>
+        </app-error-msg>
       </div>
 
       <div class="col-md-3">
@@ -121,11 +118,11 @@
           id="numero"
           formControlName="numero"
         />
-        <app-campo-control
-          [mostrarErro]="verificaValidaTouched('endereco.numero')"
-          msgErro="Número é obrigatório"
+        <app-error-msg
+          [control]="verificaValidaTouched('endereco.numero')"
+          label="Número"
         >
-        </app-campo-control>
+        </app-error-msg>
       </div>
 
       <div class="col-md-6">
@@ -152,11 +149,11 @@
           formControlName="rua"
         />
 
-        <app-campo-control
-          [mostrarErro]="verificaValidaTouched('endereco.rua')"
-          msgErro="Rua é obrigatório"
+        <app-error-msg
+          [control]="verificaValidaTouched('endereco.rua')"
+          label="Rua"
         >
-        </app-campo-control>
+        </app-error-msg>
       </div>
     </div>
 
@@ -169,11 +166,11 @@
           id="bairro"
           formControlName="bairro"
         />
-        <app-campo-control
-          [mostrarErro]="verificaValidaTouched('endereco.bairro')"
-          msgErro="Bairro é obrigatório"
+        <app-error-msg
+          [control]="verificaValidaTouched('endereco.bairro')"
+          label="Bairro"
         >
-        </app-campo-control>
+        </app-error-msg>
       </div>
 
       <div class="col-md-4">
@@ -184,11 +181,11 @@
           id="cidade"
           formControlName="cidade"
         />
-        <app-campo-control
-          [mostrarErro]="verificaValidaTouched('endereco.cidade')"
-          msgErro="Cidade é obrigatório"
+        <app-error-msg
+          [control]="verificaValidaTouched('endereco.cidade')"
+          label="Cidade"
         >
-        </app-campo-control>
+        </app-error-msg>
       </div>
 
       <div class="col-md-3">
@@ -198,11 +195,11 @@
             {{ uf.nome }}
           </option>
         </select>
-        <app-campo-control
-          [mostrarErro]="verificaValidaTouched('endereco.estado')"
-          msgErro="Estado é obrigatório"
+        <app-error-msg
+          [control]="verificaValidaTouched('endereco.estado')"
+          label="Estado"
         >
-        </app-campo-control>
+        </app-error-msg>
       </div>
     </div>
   </div>
@@ -248,11 +245,11 @@
           Aceito os termos.
         </label>
 
-        <app-campo-control
-          [mostrarErro]="verificaValidaTouched('termos')"
+        <app-error-msg
+          [control]="verificaValidaTouched('termos')"
           msgErro="Por favor, aceite os termos."
         >
-        </app-campo-control>
+        </app-error-msg>
       </div>
     </div>
 
@@ -266,11 +263,11 @@
             <input type="checkbox" [formControlName]="i"> {{ frameworks[i] }}
           </label>
         </div>
-        <app-campo-control
-        [mostrarErro]="!formulario.get('frameworks').valid"
+        <app-error-msg
+        [control]="!formulario.get('frameworks').valid"
         msgErro="Selecione 1 opção."
       >
-      </app-campo-control>
+      </app-error-msg>
       </div>
     </div>
 
