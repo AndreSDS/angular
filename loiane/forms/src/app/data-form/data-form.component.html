@@ -1,24 +1,12 @@
 <form class="form-horizontal" [formGroup]="formulario" (ngSubmit)="onSubmit()">
-  <div class="form-group" [ngClass]="aplicaCssErro('nome')">
-    <div class="col-sm-12">
-      <label for="nome" class="control-label">Nome</label>
-    </div>
-
-    <div class="col-sm-12">
-      <input
-        required
-        type="text"
-        formControlName="nome"
-        id="nome"
-        class="form-control"
-        placeholder="Nome"
-      />
-
-      <app-error-msg [control]="formulario.get('nome')" label="Nome"
-      >
-      </app-error-msg>
-    </div>
-  </div>
+  <app-input-field
+    class="col-sm-12"
+    formControlName="nome"
+    [classeCss]="aplicaCssErro('nome')"
+    id="nome"
+    label="Nome"
+    [control]="formulario.get('nome')"
+  ></app-input-field>
 
   <div class="form-group" [ngClass]="aplicaCssErro('email')">
     <div class="col-sm-12">
@@ -36,8 +24,7 @@
         placeholder="nome@email.com"
       />
 
-      <app-error-msg [control]="formulario.get('email')" label="Email"
-      >
+      <app-error-msg [control]="formulario.get('email')" label="Email">
       </app-error-msg>
 
       <app-error-msg
@@ -84,7 +71,6 @@
     </div>
   </div>
 
-
   <div formGroupName="endereco">
     <div class="form-group" [ngClass]="aplicaCssErro('endereco.cep')">
       <div class="col-md-3">
@@ -97,10 +83,7 @@
           formControlName="cep"
         />
 
-        <app-error-msg
-          [control]="verificaRequired('endereco.cep')"
-          label="Cep"
-        >
+        <app-error-msg [control]="verificaRequired('endereco.cep')" label="Cep">
         </app-error-msg>
 
         <app-error-msg
@@ -207,7 +190,12 @@
   <div class="form-group">
     <div class="col-md-4" [ngClass]="aplicaCssErro('cargo')">
       <label for="cargo" class="control-label">Cargo</label>
-      <select class="form-control" id="cargo" formControlName="cargo" [compareWith]="compararcargos">
+      <select
+        class="form-control"
+        id="cargo"
+        formControlName="cargo"
+        [compareWith]="compararcargos"
+      >
         <option *ngFor="let cargo of cargos" [ngValue]="cargo">
           {{ cargo.desc }}
         </option>
@@ -216,8 +204,17 @@
 
     <div class="col-md-4" [ngClass]="aplicaCssErro('tecnologias')">
       <label for="tecnologias" class="control-label">Tecnologias</label>
-      <select multiple class="form-control" id="tecnologias" formControlName="tecnologias" [compareWith]="compararcargos">
-        <option *ngFor="let tecnologia of tecnologias" [value]="tecnologia.nome">
+      <select
+        multiple
+        class="form-control"
+        id="tecnologias"
+        formControlName="tecnologias"
+        [compareWith]="compararcargos"
+      >
+        <option
+          *ngFor="let tecnologia of tecnologias"
+          [value]="tecnologia.nome"
+        >
           {{ tecnologia.desc }}
         </option>
       </select>
@@ -228,20 +225,28 @@
       <div id="newsletter" class="row">
         <div class="col-sm-4" *ngFor="let item of newsletterOp">
           <label class="radio-inline">
-            <input type="radio" [value]="item.valor" formControlName="newsletter" />
-              {{ item.desc }}
+            <input
+              type="radio"
+              [value]="item.valor"
+              formControlName="newsletter"
+            />
+            {{ item.desc }}
           </label>
         </div>
       </div>
     </div>
-
   </div>
 
   <div class="form-group">
     <div class="col-md-3" [ngClass]="aplicaCssErro('termos')">
       <div class="checkbox">
         <label for="termos" class="checkbox-inline">
-          <input type="checkbox" formControlName="termos" name="termos" id="termos">
+          <input
+            type="checkbox"
+            formControlName="termos"
+            name="termos"
+            id="termos"
+          />
           Aceito os termos.
         </label>
 
@@ -256,21 +261,26 @@
     <div class="col-md-3" [ngClass]="aplicaCssErro('frameworks')">
       <label for="frameworks">Frameworks</label>
       <div id="frameworks" class="row">
-        <div class="checkbox" class="col-sm-4"
-        formArrayName="frameworks"
-        *ngFor="let item of formulario.get('frameworks')['controls']; let i = index">
+        <div
+          class="checkbox"
+          class="col-sm-4"
+          formArrayName="frameworks"
+          *ngFor="
+            let item of formulario.get('frameworks')['controls'];
+            let i = index
+          "
+        >
           <label class="checkbox-inline">
-            <input type="checkbox" [formControlName]="i"> {{ frameworks[i] }}
+            <input type="checkbox" [formControlName]="i" /> {{ frameworks[i] }}
           </label>
         </div>
         <app-error-msg
-        [control]="!formulario.get('frameworks').valid"
-        msgErro="Selecione 1 opção."
-      >
-      </app-error-msg>
+          [control]="!formulario.get('frameworks').valid"
+          msgErro="Selecione 1 opção."
+        >
+        </app-error-msg>
       </div>
     </div>
-
   </div>
 
   <button type="submit" class="btn btn-primary">Enviar</button>
@@ -279,7 +289,6 @@
 
   <button class="btn btn-info" (click)="setCargo()">Cargo</button>
   <button class="btn btn-info" (click)="setTecnologias()">Tecnologias</button>
-
 
   <app-form-debug [form]="formulario"></app-form-debug>
 </form>
