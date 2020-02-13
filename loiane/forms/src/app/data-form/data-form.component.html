@@ -6,7 +6,9 @@
     id="nome"
     label="Nome"
     [control]="formulario.get('nome')"
-  ></app-input-field>
+  >
+
+</app-input-field>
 
   <div class="form-group" [ngClass]="aplicaCssErro('email')">
     <div class="col-sm-12">
@@ -15,8 +17,6 @@
 
     <div class="col-sm-12">
       <input
-        required
-        email
         type="email"
         id="email"
         formControlName="email"

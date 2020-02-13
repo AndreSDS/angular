@@ -52,7 +52,7 @@ export class FormValidation {
   // tslint:disable-next-line: no-shadowed-variable
   const config = {
     required : `${ fieldName } é obrigatório.`,
-    minlength : `${ fieldName } precisa ter no mínimo ${validatorValue.requireLength} caracteres.`,
+    minlength : `${ fieldName } precisa ter no mínimo ${validatorValue.requiredLength} caracteres.`,
     cepInvaido : 'CEP inválido.'
   };
 
