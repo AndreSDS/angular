@@ -24,7 +24,6 @@ export abstract class BaseFormComponent implements OnInit {
     }
   }
 
-
   verificaValidaForm(formGroup: FormGroup | FormArray) {
     Object.keys(formGroup.controls).forEach(campo => {
       const controle = formGroup.get(campo);

@@ -158,12 +158,11 @@
 
       <div class="col-md-4">
         <label for="cidade" class="control-label">Cidade</label>
-        <input
-          type="text"
-          class="form-control"
-          id="cidade"
-          formControlName="cidade"
-        />
+        <select class="form-control" id="cidade" formControlName="cidade">
+          <option *ngFor="let cidade of cidades" [value]="cidade.nome">
+            {{ cidade.nome }}
+          </option>
+        </select>
         <app-error-msg
           [control]="verificaValidaTouched('endereco.cidade')"
           label="Cidade"
@@ -174,7 +173,7 @@
       <div class="col-md-3">
         <label for="estado" class="control-label">Estado</label>
         <select class="form-control" id="estado" formControlName="estado">
-          <option *ngFor="let uf of estados | async" [value]="uf.sigla">
+          <option *ngFor="let uf of estados" [value]="uf.sigla">
             {{ uf.nome }}
           </option>
         </select>
@@ -184,6 +183,7 @@
         >
         </app-error-msg>
       </div>
+
     </div>
   </div>
 

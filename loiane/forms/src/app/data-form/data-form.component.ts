@@ -3,16 +3,13 @@ import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
-  FormGroup,
   FormBuilder,
   Validators,
-  FormControl,
-  FormArray
+  FormControl
 } from '@angular/forms';
 import {
   map,
   tap,
-  distinct,
   distinctUntilChanged,
   switchMap
 } from 'rxjs/operators';
@@ -21,6 +18,7 @@ import { Estados } from '../shared/models/estados.model';
 import { Observable, empty } from 'rxjs';
 import { FormValidation } from '../shared/form-validation';
 import { BaseFormComponent } from '../shared/base-form/base-form.component';
+import { Cidade } from '../shared/models/cidades';
 
 @Component({
   selector: 'app-data-form',
@@ -29,8 +27,9 @@ import { BaseFormComponent } from '../shared/base-form/base-form.component';
 })
 export class DataFormComponent extends BaseFormComponent implements OnInit {
   // formulario: FormGroup;
-  // estados: Estados[];
-  estados: Observable<Estados[]>;
+  estados: Estados[];
+  cidades: Cidade[];
+  // estados: Observable<Estados[]>;
   cargos: any[];
   tecnologias: any[];
   newsletterOp: any[];
@@ -49,10 +48,13 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
 
   ngOnInit() {
     // this.VerifaEmailService.verificaEmail('email@email.com').subscribe();
+    this.dropdownService.getEstados()
+    .subscribe(dados => this.estados = dados);
+
     this.newsletterOp = this.dropdownService.getNewsletter();
     this.cargos = this.dropdownService.getCargos();
     this.tecnologias = this.dropdownService.getTecnologias();
-    this.estados = this.dropdownService.getEstados();
+    // this.estados = this.dropdownService.getEstados();
     // this.dropdownService.getEstados().subscribe( dados => this.estados = dados );
 
     /*this.formulario = new FormGroup({
@@ -98,6 +100,14 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
         )
       )
       .subscribe(dados => (dados ? this.populaDados(dados) : {}));
+
+      this.formulario.get('endereco.estado').valueChanges
+      .pipe(
+        map(estado => this.estados.filter(e => e.sigla === estado )),
+        map(estados => estados && estados.length > 0 ? estados[0].id : empty()),
+        switchMap((estadoId: number) => this.dropdownService.getCidades(estadoId)),
+        )
+        .subscribe(cidades => this.cidades = cidades);
   }
 
   buildFrameworks() {
