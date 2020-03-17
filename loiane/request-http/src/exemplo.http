@@ -1,12 +1,14 @@
-GET http://localhost:3000/cursos
+//json-server --watch --port 3333 src/db.json 
+
+GET http://localhost:3333/cursos
 
 ###
 
-GET http://localhost:3000/cursos/2 HTTP/1.1
+GET http://localhost:3333/cursos/2 HTTP/1.1
 
 ###
 
-POST http://localhost:3000/cursos HTTP/1.1
+POST http://localhost:3333/cursos HTTP/1.1
 content-type: application/json
 
 {
@@ -15,7 +17,7 @@ content-type: application/json
 
 ###
 
-PUT http://localhost:3000/cursos/2 HTTP/1.1
+PUT http://localhost:3333/cursos/2 HTTP/1.1
 content-type: application/json
 
 {
