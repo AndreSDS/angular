@@ -1,8 +1,10 @@
+import { ActivatedRoute } from '@angular/router';
 import { AlertModalService } from './../../shared/alert-modal.service';
 import { CursosService } from './../cursos.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cursos-form',
@@ -18,13 +20,19 @@ export class CursosFormComponent implements OnInit {
     private fb: FormBuilder, 
     private service: CursosService,
     private modal: AlertModalService,
-    private location: Location
+    private location: Location,
+    private route: ActivatedRoute
     ) { }
 
   ngOnInit(): void {
+
+    const curso = this.route.snapshot.data['curso'];
+
     this.form = this.fb.group({
-      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]]
+      id: [curso.id],
+      nome: [curso.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]]
     });
+
   }
 
   hasError(field: string){

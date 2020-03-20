@@ -24,7 +24,7 @@
                     <td>{{ curso.nome }}</td>
                     <td>
                         <div class="float-right">
-                            <button class="btn btn-outline-warning mb-1 btn-sm">Atualizar</button>
+                            <button class="btn btn-outline-warning mb-1 btn-sm" (click)="onEdit(curso.id)">Editar</button>
                             <button class="btn btn-outline-danger mb-1 btn-sm">Remover</button>
                         </div>
                     </td>
