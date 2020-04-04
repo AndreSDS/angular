@@ -1,0 +1,8 @@
+{
+    "/lol/summoner/v4/summoners/by-name/*": {
+        "target" : "https://br1.api.riotgames.com",
+        "secure" : true,
+        "logLevel": "debug",
+        "origin": "*"
+    }
+}
