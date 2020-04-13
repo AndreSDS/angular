@@ -38,7 +38,7 @@ export class CursosListaComponent implements OnInit {
     this.cursos$ = this.service.list()
       .pipe(
         catchError(error => {
-          console.error(error);
+          console.log(error);
           //this.error$.next(true);
           this.handleError();
           return empty();
