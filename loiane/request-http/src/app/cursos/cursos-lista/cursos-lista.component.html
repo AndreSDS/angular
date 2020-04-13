@@ -1,40 +1,48 @@
 <div class="card mt-3">
-    <div class="card-header">
-        <div class="float-left">
-            <h3>Cursos</h3>
-        </div>
-        <div class="float-right">
-            <button type="button" class="btn btn-primary" [routerLink]="['novo']">Novo Curso</button>
-            <button type="button" class="btn btn-secondary" (click)="onRefresh()">Atualizar</button>
-        </div>
-    </div>
+	<div class="card-header">
+		<div class="float-left">
+			<h3>Cursos</h3>
+		</div>
+		<div class="float-right">
+			<button type="button" class="btn btn-primary" [routerLink]="['novo']">Novo Curso</button>
+			<button type="button" class="btn btn-secondary" (click)="onRefresh()">Atualizar</button>
+		</div>
+	</div>
 
-    <div class="card-body">
-        <table class="table table-hover" *ngIf="cursos$ | async as cursos; else loading">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Curso</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let curso of cursos">
-                    <td>{{ curso.id }}</td>
-                    <td>{{ curso.nome }}</td>
-                    <td>
-                        <div class="float-right">
-                            <button class="btn btn-outline-warning mb-1 btn-sm" (click)="onEdit(curso.id)">Editar</button>
-                            <button class="btn btn-outline-danger mb-1 btn-sm">Remover</button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+	<div class="card-body">
+		<table class="table table-hover" *ngIf="cursos$ | async as cursos; else loading">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Curso</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let curso of cursos">
+					<td>{{ curso.id }}</td>
+					<td>{{ curso.nome }}</td>
+					<td>
+						<div class="float-right">
+							<button class="btn btn-outline-warning mb-1 btn-sm" (click)="onEdit(curso.id)">Editar</button>
+							<button class="btn btn-outline-danger mb-1 btn-sm" (click)="onDelete(curso)">Remover</button>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 
-        <ng-template #loading>
-            <span>Carregando cursos...</span>
-        </ng-template>
+		<ng-template #loading>
+			<span>Carregando cursos...</span>
+		</ng-template>
 
-    </div>
+	</div>
 </div>
+
+<ng-template #deleteModal>
+	<div class="modal-body text-center">
+		<p>Deseja remover este curso?</p>
+		<button type="button" class="btn btn-outline-secondary" (click)="onDecline()">Não</button>
+		<button type="button" class="btn btn-danger" (click)="onConfirm()">Sim</button>
+	</div>
+</ng-template>
