@@ -9,7 +9,7 @@ import { tap, delay, take } from 'rxjs/operators';
 })
 export class CursosService {
 
-  private readonly API = `${environment.GIT_POD_API}cursos`;
+  private readonly API = `${environment.API}cursos`;
 
   constructor(private http: HttpClient) { }
 
