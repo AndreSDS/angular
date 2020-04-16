@@ -9,22 +9,39 @@ import { tap, delay, take } from 'rxjs/operators';
 })
 export class CursosService {
 
-  private readonly API = `${environment.API}cursos`;
+  private readonly API = `${environment.GIT_POD_API}cursos`;
 
   constructor(private http: HttpClient) { }
 
   list() {
     return this.http.get<Curso[]>(this.API)
-    .pipe(
-      delay(2000)
-    );
+      .pipe(
+        delay(2000)
+      );
   }
 
-  loadById(id){
+  loadById(id) {
     return this.http.get<Curso>(`${this.API}/${id}`).pipe(take(1));
   }
 
-  create(curso){
+  private create(curso) {
     return this.http.post(this.API, curso).pipe(take(1));
   }
+
+  private upDate(curso) {
+    return this.http.put(`${this.API}/${curso.id}`, curso).pipe(take(1));
+  }
+
+  isUpdated(curso) {
+    if (curso.id) {
+      return this.upDate(curso);
+    } else {
+      return this.create(curso);
+    }
+  }
+
+  remove(id){
+    return this.http.delete(`${this.API}/${id}`).pipe(take(1));
+  }
+
 }

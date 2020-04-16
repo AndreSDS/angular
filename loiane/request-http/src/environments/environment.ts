@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  GIT_POD_API: "https://3000-ea1db435-42b8-4191-ade5-9408a47fc81c.ws-us02.gitpod.io/",
   API:"http://localhost:3000/"
 };
 

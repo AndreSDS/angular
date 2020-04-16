@@ -17,12 +17,12 @@ export class CursosFormComponent implements OnInit {
   submitted = false;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private service: CursosService,
     private modal: AlertModalService,
     private location: Location,
     private route: ActivatedRoute
-    ) { }
+  ) { }
 
   ngOnInit(): void {
 
@@ -35,25 +35,32 @@ export class CursosFormComponent implements OnInit {
 
   }
 
-  hasError(field: string){
-   return this.form.get(field).errors;
+  hasError(field: string) {
+    return this.form.get(field).errors;
   }
 
-  onSubmit(){
+  onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.service.create(this.form.value).subscribe(
-        success =>{ 
-          this.modal.showAlertSuccess("Criado com ucesso"),
+
+      let msgSuccess = 'Curso criado com sucesso!';
+      let msgError = 'Erro ao criar curso, tente novamente.';
+      if (this.form.value.id) {
+        msgSuccess = 'Curso atualizado com sucesso!';
+        msgError = 'Erro ao atualizar curso, tente novamente.';
+      }
+
+      this.service.isUpdated(this.form.value).subscribe(
+        success => {
+          this.modal.showAlertSuccess(msgSuccess);
           this.location.back();
         },
-        error => this.modal.showAlertDanger('Erro ao criar cruso. Tente novamente.'),
-        () => console.log('request completo')
+        error => this.modal.showAlertDanger(msgError)
       );
     }
   }
 
-  onCancel(){
+  onCancel() {
     this.submitted = false;
     this.form.reset();
   }
