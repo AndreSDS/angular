@@ -1,6 +1,7 @@
+import { CursoCrudService } from './../../shared/curso-crud.service';
 import { AlertModalService } from './../../shared/alert-modal.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CursosService } from '../cursos.service';
+//import { CursosService } from '../cursos.service';
 import { Curso } from '../curso';
 import { Observable, Subject, EMPTY } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -27,8 +28,9 @@ export class CursosListaComponent implements OnInit {
   @ViewChild('deleteModal') deleteModal;
 
   constructor(
+    private service: CursoCrudService,
     private modalService: BsModalService,
-    private service: CursosService,
+    //private service: CursosService,
     private alertService: AlertModalService,
     private router: Router,
     private route: ActivatedRoute
