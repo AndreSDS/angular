@@ -44,3 +44,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# server/node_modules
+/server/node_modules
+
+# uplodas files
+/server/uploads
